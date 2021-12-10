@@ -8,6 +8,12 @@ data "aws_vpc" "selected" {
   id = var.vpc_id
 }
 
+resource "aws_subnet" "project_subnet" {
+  vpc_id            = data.aws_vpc.selected.id
+  availability_zone = "us-east-1a"
+  cidr_block        = cidrsubnet(data.aws_vpc.selected.cidr_block, 4, 1)
+}
+
 
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
@@ -15,12 +21,11 @@ resource "aws_security_group" "allow_tls" {
   vpc_id      = data.aws_vpc.selected.id
 
   ingress {
-    description      = "TLS from VPC"
-    from_port        = 443
-    to_port          = 443
-    protocol         = "tcp"
-    cidr_blocks      = [data.aws_vpc.selected.cidr_block]
-    ipv6_cidr_blocks = [data.aws_vpc.selected.ipv6_cidr_block]
+    description = "TLS from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [data.aws_vpc.selected.cidr_block]
   }
 
   ingress {
@@ -32,14 +37,21 @@ resource "aws_security_group" "allow_tls" {
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
-    Name = "allow_tls"
+    Name = "simplilearn project1 sg"
   }
+}
+
+output "vpc_id" {
+  value = data.aws_vpc.selected.id
+}
+
+output "vpc_cidr_block" {
+  value = data.aws_vpc.selected.cidr_block
 }
