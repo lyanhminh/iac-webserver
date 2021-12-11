@@ -30,9 +30,10 @@ resource "aws_instance" "web" {
   subnet_id     = aws_subnet.project_subnet.id
   associate_public_ip_address = true
   tags = {
-    Name    = "MinhsProject1"
+    Name    = "MinhsProject1-ec2"
     Project = var.project_name
   }
 
-  key_name = var.key_pair_name
+  vpc_security_group_ids = [aws_security_group.ubuntu_project_sg.id]
+  key_name               = var.key_pair_name
 }

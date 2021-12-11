@@ -15,7 +15,7 @@ resource "aws_subnet" "project_subnet" {
 }
 
 
-resource "aws_security_group" "allow_tls" {
+resource "aws_security_group" "ubuntu_project_sg" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = data.aws_vpc.selected.id
