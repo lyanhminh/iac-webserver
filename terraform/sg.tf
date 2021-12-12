@@ -1,13 +1,3 @@
-variable "vpc_id" {
-}
-
-variable "ssh_ip_list" {
-}
-
-data "aws_vpc" "selected" {
-  id = var.vpc_id
-}
-
 resource "aws_subnet" "project_subnet" {
   vpc_id            = data.aws_vpc.selected.id
   availability_zone = "us-east-1a"
@@ -51,7 +41,7 @@ resource "aws_security_group" "ubuntu_project_sg" {
   }
 
   tags = {
-    Name = "simplilearn project1 sg"
+    Name = "{var.project_name}-sg"
   }
 }
 
