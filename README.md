@@ -56,7 +56,6 @@ provider "aws" {
 ```
 Unfortunately, backend configuration files do not admit variables so there is a bit of unnecessary copy/pasting within and across files.
 
-
 5. Create a key pair for ssh access to your instance using the aws cli. In your terminal enter
 ```
 key_response=$(aws ec2 create-key-pair --key-name <keyPairName>)
@@ -64,7 +63,7 @@ echo $key-response | jq '.KeyMaterial' | sed 's/\"//g' > ~/.ssh/<keyPairName>.pe
 ```
 where both occurences of `<keyPairName>` should be substituted for any reasonable name of your choosing. This will place your rsa key into `~/.ssh/` as `keyPairName.pem`.
 
-6. cd back up into `terraform` and edit the variable file `variables.auto.tfvars` anywhere there are `XXX`s.
+6. cd back up into `terraform` and edit the variable file `variables.template` anywhere there are `XXX`s.
 ```
 project_name = "simplilearn-projec1" //Change to whatever
 ami_id = "ami-XXXX"
@@ -75,7 +74,9 @@ vpc_id   = "vpc-XXX" //See the relevant note below
 ssh_ip_list = ["XXX.XXX.XXX.XXX/32","XXX.XXX.XXX.XXX/32", ...]
 ```
 
-Some notes here:
+Save your edits and rename the file to `variables.auto.tfvars`. The `variables` portion is not so important other than it gives the reader context to what the file does. However, having the `auto.tfvars` suffix is important as it tells Terraform to use this file to find the variable definitions.
+
+Some additional notes here:
 
 * AMI availability is region specific. Use this [site](https://cloud-images.ubuntu.com/locator/ec2/) to choose an appropriate region and select the desired Ubuntu AMI. Choose an Ubuntu AMI that is versioned 18+ as the ansible playbooks later on will be expecting this when we configure the ec2 instance. Also we'll need the owner id in the line below. To get this id enter into your terminal: `aws ec2 describe-images --image-ids <ami-XXX> | grep Owner` 
 If you choose `us-east-1` as your region, no change is needed.

@@ -1,0 +1,7 @@
+project_name = "simplilearn-projec1" //Change to whatever
+ami_id = "ami-XXXX"
+owner = "XXX" // this number is specific to the chosen AMI above
+instance_type = "t2.micro"
+key_pair_name = "XXXX" //This should be the same as in step 5. above
+vpc_id   = "vpc-XXX" //See the relevant note below
+ssh_ip_list = ["XXX.XXX.XXX.XXX/32","XXX.XXX.XXX.XXX/32
