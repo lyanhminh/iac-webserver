@@ -184,6 +184,8 @@ Now, should you destroy your ec2 instance and provision a new one having a new I
 
 4\. Navigate to the Jenkins server at <instance_ip>:8080 and login using the credentials defined in the `defaults/main.yml` file.
 
+![](screenshots/jenkins-login)
+
 ## Next Steps
 
 Ideas for next steps would be:
